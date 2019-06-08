@@ -351,8 +351,7 @@ func (r *Replica) RegisterRPC(msgObj fastrpc.Serializable, notify chan fastrpc.S
 }
 
 func (r *Replica) SendMsg(peerId int32, code uint8, msg fastrpc.Serializable) {
-	rNum := uint16(rand.Intn(1000)) + 1
-	if rNum > r.DropRate {
+	if r.shouldSendMsg() {
 		w := r.PeerWriters[peerId]
 		w.WriteByte(code)
 		msg.Marshal(w)
@@ -361,8 +360,7 @@ func (r *Replica) SendMsg(peerId int32, code uint8, msg fastrpc.Serializable) {
 }
 
 func (r *Replica) SendMsgNoFlush(peerId int32, code uint8, msg fastrpc.Serializable) {
-	rNum := uint16(rand.Intn(1000)) + 1
-	if rNum > r.DropRate {
+	if r.shouldSendMsg() {
 		w := r.PeerWriters[peerId]
 		w.WriteByte(code)
 		msg.Marshal(w)
@@ -373,8 +371,7 @@ func (r *Replica) ReplyPropose(reply *genericsmrproto.ProposeReply, w *bufio.Wri
 	//r.clientMutex.Lock()
 	//defer r.clientMutex.Unlock()
 	//w.WriteByte(genericsmrproto.PROPOSE_REPLY)
-	rNum := uint16(rand.Intn(1000)) + 1
-	if rNum > r.DropRate {
+	if r.shouldSendMsg() {
 		reply.Marshal(w)
 		w.Flush()
 	}
@@ -384,16 +381,14 @@ func (r *Replica) ReplyProposeTS(reply *genericsmrproto.ProposeReplyTS, w *bufio
 	//r.clientMutex.Lock()
 	//defer r.clientMutex.Unlock()
 	//w.WriteByte(genericsmrproto.PROPOSE_REPLY)
-	rNum := uint16(rand.Intn(1000)) + 1
-	if rNum > r.DropRate {
+	if r.shouldSendMsg() {
 		reply.Marshal(w)
 		w.Flush()
 	}
 }
 
 func (r *Replica) SendBeacon(peerId int32) {
-	rNum := uint16(rand.Intn(1000)) + 1
-	if rNum > r.DropRate {
+	if r.shouldSendMsg() {
 		w := r.PeerWriters[peerId]
 		w.WriteByte(genericsmrproto.GENERIC_SMR_BEACON)
 		beacon := &genericsmrproto.Beacon{rdtsc.Cputicks()}
@@ -403,14 +398,18 @@ func (r *Replica) SendBeacon(peerId int32) {
 }
 
 func (r *Replica) ReplyBeacon(beacon *Beacon) {
-	rNum := uint16(rand.Intn(1000)) + 1
-	if rNum > r.DropRate {
+	if r.shouldSendMsg() {
 		w := r.PeerWriters[beacon.Rid]
 		w.WriteByte(genericsmrproto.GENERIC_SMR_BEACON_REPLY)
 		rb := &genericsmrproto.BeaconReply{beacon.Timestamp}
 		rb.Marshal(w)
 		w.Flush()
 	}
+}
+
+func (r *Replica) shouldSendMsg() {
+	rNum := uint16(rand.Intn(1000)) + 1
+	return rNum > r.DropRate
 }
 
 // updates the preferred order in which to communicate with peers according to a preferred quorum
