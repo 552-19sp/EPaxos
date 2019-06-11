@@ -112,7 +112,7 @@ func (master *Master) run() {
 }
 
 func (master *Master) Register(args *masterproto.RegisterArgs, reply *masterproto.RegisterReply) error {
-
+	log.Println("register called")
 	master.lock.Lock()
 	defer master.lock.Unlock()
 
