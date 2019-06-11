@@ -203,8 +203,12 @@ func (r *Replica) ConnectToPeersNoListeners() {
 func (r *Replica) waitForPeerConnections(done chan bool) {
 	var b [4]byte
 	bs := b[:4]
+	var err error
 
-	r.Listener, _ = net.Listen("tcp", r.PeerAddrList[r.Id])
+	r.Listener, err = net.Listen("tcp", r.PeerAddrList[r.Id])
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 	for i := r.Id + 1; i < int32(r.N); i++ {
 		conn, err := r.Listener.Accept()
 		if err != nil {

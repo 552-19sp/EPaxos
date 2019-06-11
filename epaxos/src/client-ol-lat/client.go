@@ -17,7 +17,7 @@ import (
 )
 
 var masterAddr *string = flag.String("maddr", "", "Master address. Defaults to localhost")
-var masterPort *int = flag.Int("mport", 7087, "Master port.  Defaults to 7077.")
+var masterPort *int = flag.Int("mport", 11111, "Master port.  Defaults to 11111.")
 var reqsNb *int = flag.Int("q", 5000, "Total number of requests. Defaults to 5000.")
 var noLeader *bool = flag.Bool("e", false, "Egalitarian (no leader). Defaults to false.")
 var fast *bool = flag.Bool("f", false, "Fast Paxos: send message directly to all replicas. Defaults to false.")

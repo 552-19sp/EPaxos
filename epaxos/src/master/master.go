@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-var portnum *int = flag.Int("port", 7087, "Port # to listen on. Defaults to 7087")
+var portnum *int = flag.Int("port", 11111, "Port # to listen on. Defaults to 11111")
 var numNodes *int = flag.Int("N", 3, "Number of replicas. Defaults to 3.")
 
 type Master struct {

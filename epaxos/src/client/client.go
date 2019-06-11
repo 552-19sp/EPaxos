@@ -18,7 +18,7 @@ import (
 	"time"
 )
 
-var masterPort *int = flag.Int("mport", 7087, "Master port.  Defaults to 7087.")
+var masterPort *int = flag.Int("mport", 11111, "Master port.  Defaults to 11111.")
 var reqsNb *int = flag.Int("q", 500, "Total number of requests. Defaults to 5000.")
 var writes *int = flag.Int("w", 100, "Percentage of updates (writes). Defaults to 100%.")
 var noLeader *bool = flag.Bool("e", true, "Egalitarian (no leader). Defaults to true.")
@@ -39,8 +39,8 @@ var rarray []int
 var rsp []bool
 
 var masterAddr *string
-var threeReplicaMasterAddr string
-var fiveReplicaMasterAddr string
+var threeReplicaMasterAddr = "35.171.129.43"
+var fiveReplicaMasterAddr = "35.171.129.43"
 
 func main() {
 	flag.Parse()
@@ -93,7 +93,7 @@ func main() {
 
 	master, err := rpc.DialHTTP("tcp", fmt.Sprintf("%s:%d", *masterAddr, *masterPort))
 	if err != nil {
-		log.Fatalf("Error connecting to master\n")
+		log.Fatalf("Error connecting to master: %s\n", err.Error())
 	}
 
 	rlReply := new(masterproto.GetReplicaListReply)
