@@ -75,7 +75,7 @@ func main() {
 
 	rpc.HandleHTTP()
 	//listen for RPC on a different port (8070 by default)
-	l, err := net.Listen("tcp", fmt.Sprintf(":%d", *portnum+1000))
+	l, err := net.Listen("tcp4", fmt.Sprintf(":%d", *portnum+1000))
 	if err != nil {
 		log.Fatal("listen error:", err)
 	}

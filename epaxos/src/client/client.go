@@ -91,7 +91,7 @@ func main() {
 		log.Fatalf("Conflicts percentage must be between 0 and 100.\n")
 	}
 
-	master, err := rpc.DialHTTP("tcp", fmt.Sprintf("%s:%d", *masterAddr, *masterPort))
+	master, err := rpc.DialHTTP("tcp4", fmt.Sprintf("%s:%d", *masterAddr, *masterPort))
 	if err != nil {
 		log.Fatalf("Error connecting to master: %s\n", err.Error())
 	}
@@ -146,7 +146,7 @@ func main() {
 
 	for i := 0; i < N; i++ {
 		var err error
-		servers[i], err = net.Dial("tcp", rlReply.ReplicaList[i])
+		servers[i], err = net.Dial("tcp4", rlReply.ReplicaList[i])
 		if err != nil {
 			log.Printf("Error connecting to replica %d\n", i)
 		}

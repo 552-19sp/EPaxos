@@ -179,7 +179,7 @@ func (r *Replica) ConnectToPeersNoListeners() {
 	//connect to peers
 	for i := 0; i < int(r.Id); i++ {
 		for done := false; !done; {
-			if conn, err := net.Dial("tcp", r.PeerAddrList[i]); err == nil {
+			if conn, err := net.Dial("tcp4", r.PeerAddrList[i]); err == nil {
 				r.Peers[i] = conn
 				done = true
 			} else {
