@@ -128,6 +128,8 @@ func (master *Master) Register(args *masterproto.RegisterArgs, reply *masterprot
 			index = i
 			break
 		}
+		log.Printf("%d", index)
+		log.Printf("%d", nlen)
 	}
 
 	if index == nlen {
