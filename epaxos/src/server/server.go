@@ -20,7 +20,7 @@ import (
 )
 
 var portnum *int = flag.Int("port", 11112, "Port # to listen on. Defaults to 11112")
-var masterAddr *string = flag.String("maddr", "205.175.106.212", "Master address. Defaults to localhost.")
+var masterAddr *string = flag.String("maddr", "35.171.129.43", "Master address. Defaults to localhost.")
 var masterPort *int = flag.Int("mport", 11111, "Master port.  Defaults to 11111.")
 var myAddr *string = flag.String("addr", "", "Server address (this machine). Defaults to localhost.")
 var doMencius *bool = flag.Bool("m", false, "Use Mencius as the replication protocol. Defaults to false.")
