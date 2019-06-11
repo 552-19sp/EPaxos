@@ -129,6 +129,7 @@ func (master *Master) Register(args *masterproto.RegisterArgs, reply *masterprot
 	}
 
 	if index == nlen {
+		log.Printf("incrementing")
 		master.nodeList = master.nodeList[0 : nlen+1]
 		master.nodeList[nlen] = addrPort
 		master.addrList = master.addrList[0 : nlen+1]
