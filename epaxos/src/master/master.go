@@ -70,7 +70,7 @@ func (master *Master) run() {
 	for i := 0; i < master.N; i++ {
 		var err error
 		addr := fmt.Sprintf("%s:%d", master.addrList[i], master.portList[i]+1000)
-		master.nodes[i], err = rpc.DialHTTP("tcp", addr)
+		master.nodes[i], err = rpc.DialHTTP("tcp4", addr)
 		if err != nil {
 			log.Fatalf("Error connecting to replica %d\n", i)
 		}
@@ -112,7 +112,6 @@ func (master *Master) run() {
 }
 
 func (master *Master) Register(args *masterproto.RegisterArgs, reply *masterproto.RegisterReply) error {
-	log.Println("register called")
 	master.lock.Lock()
 	defer master.lock.Unlock()
 
