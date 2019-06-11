@@ -88,7 +88,7 @@ func registerWithMaster(masterAddr string) (int, []string) {
 	var reply masterproto.RegisterReply
 
 	for done := false; !done; {
-		mcli, err := rpc.DialHTTP("tcp", masterAddr)
+		mcli, err := rpc.DialHTTP("tcp4", masterAddr)
 		if err == nil {
 			err = mcli.Call("Master.Register", args, &reply)
 			if err == nil && reply.Ready == true {
