@@ -79,6 +79,7 @@ func main() {
 	if err != nil {
 		log.Fatal("listen error:", err)
 	}
+	log.Printf("Server listening on port %d\n", *portnum+1000)
 
 	http.Serve(l, nil)
 }
