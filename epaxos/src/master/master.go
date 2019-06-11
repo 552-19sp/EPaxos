@@ -139,10 +139,12 @@ func (master *Master) Register(args *masterproto.RegisterArgs, reply *masterprot
 	}
 
 	if nlen == master.N {
+		log.Println("ready")
 		reply.Ready = true
 		reply.ReplicaId = index
 		reply.NodeList = master.nodeList
 	} else {
+		log.Println("not-ready")
 		reply.Ready = false
 	}
 
