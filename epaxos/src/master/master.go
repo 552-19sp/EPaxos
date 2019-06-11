@@ -121,6 +121,8 @@ func (master *Master) Register(args *masterproto.RegisterArgs, reply *masterprot
 
 	addrPort := fmt.Sprintf("%s:%d", args.Addr, args.Port)
 
+	log.Printf(index)
+	log.Printf(nlen)
 	for i, ap := range master.nodeList {
 		if addrPort == ap {
 			index = i
